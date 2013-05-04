@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <Button
+        android:id="@+id/MyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转" />
+    <Button
+        android:id="@+id/Buttontwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转并结束activity" />
+
+</LinearLayout>
