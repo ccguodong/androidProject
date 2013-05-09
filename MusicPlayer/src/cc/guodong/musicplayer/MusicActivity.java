@@ -12,13 +12,14 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class MusicActivity extends Activity implements OnClickListener{
 	Button start;
 	Button stop;
 	Button pause;
-	ProgressBar mySeekBar;
+	SeekBar mySeekBar;
 	public MediaPlayer myMediaPlayer = MusicPlayService.mPlayer;
 	//此静态常量是用来 声明ServiceReceiver能接受的intent
 	public static final String SERVICE_ACTION="cc.guodong.musicplayer.SERVICE_ACTION";
@@ -39,11 +40,43 @@ public class MusicActivity extends Activity implements OnClickListener{
 		final Intent intent=new Intent(this, MusicPlayService.class);
 		//启动service
 		startService(intent);
+		//注册该activityReceiver能接受的广播
 		ActivityReceiver activityReceiver=new ActivityReceiver();
 		IntentFilter activityReceiverFilter=new IntentFilter(ACTIVITY_ACTION);
 		registerReceiver(activityReceiver, activityReceiverFilter);
 		//取出progressBar
-		mySeekBar=(ProgressBar)super.findViewById(R.id.myprogressBar);
+		mySeekBar=(SeekBar)super.findViewById(R.id.mySeekBar);
+		mySeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				//fromUser==true时，说明是人为在改动
+				//progress为SeekBar的进度
+				if(fromUser==true)
+				{
+				//Log.v("------progress---", progress+"   "+seekBar.getMax()+"  "+MusicPlayService.mPlayer.getDuration());
+				int temp=progress*MusicPlayService.mPlayer.getDuration()/seekBar.getMax();
+				//Log.v("-----temp--", temp+"");
+				//使mPlayer跳转到该进度
+				MusicPlayService.mPlayer.seekTo(temp);
+				}
+			}
+		});
+		
 		
 	}
 
@@ -54,6 +87,7 @@ public class MusicActivity extends Activity implements OnClickListener{
 		return true;
 	}
 
+	//为三个按钮绑定事件
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -87,15 +121,15 @@ public class MusicActivity extends Activity implements OnClickListener{
 			// TODO Auto-generated method stub
 			int currentPosition=intent.getIntExtra("currentPosition", 0);
 			int duration=intent.getIntExtra("duration", 1);
-			Log.v("-----currentPosition---", currentPosition+"");
-			Log.v("-----duration---", duration+"");
+			/*Log.v("-----currentPosition---", currentPosition+"");
+			Log.v("-----duration---", duration+"");*/
 			//myMediaCurrentPotion=process;
 			/*Mythead mthread=new Mythead();
 			mthread.start();*/
 			//states=100*(currentPosition/duration);
 			float temp=1000*((float)currentPosition/duration);
 			int process=(int)temp;
-			Log.v("-----process---",process+"");
+		//	Log.v("-----process---",process+"");
 			//这样写，程序为什么没有死掉？？？没在主线程中休眠，就可以这样用吗？？
 			mySeekBar.setProgress(process);
 		}	

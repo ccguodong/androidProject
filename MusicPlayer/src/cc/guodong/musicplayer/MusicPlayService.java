@@ -88,12 +88,12 @@ public class MusicPlayService extends Service {
 			int control = intent.getIntExtra("control", -1);
 			switch (control) {
 			case 1:
-				Log.v("-----------", "------case1");
+				//Log.v("-----------", "------case1");
 				preparedAndPlay();
 				break;
 			case 2:
 				mPlayer.pause();
-				Log.v("-----------pause", "------case2");
+				//Log.v("-----------pause", "------case2");
 				/*Log.v("------getDuration ()---------", mPlayer.getDuration()
 						+ "mm");
 				Log.v("------getcurrentPosition---------",
@@ -101,12 +101,13 @@ public class MusicPlayService extends Service {
 
 				break;
 			case 3:
-				Log.v("-----------3", "------case3");
+			//	Log.v("-----------3", "------case3");
 				mPlayer.stop();
 				break;
 			case -1:
 				break;
 			}
+			//Æô¶¯ProgressService
 			Intent intentProService=new Intent();
 			intentProService.setAction("android.intent.action.PRO_SERVICE");
 			startService(intentProService);		
