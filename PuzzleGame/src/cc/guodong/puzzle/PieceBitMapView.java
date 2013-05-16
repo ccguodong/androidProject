@@ -85,7 +85,7 @@ public class PieceBitMapView extends View {
 		if (touchX <= 630 & touchY <= 600) {
 			int i = (int) (touchY / (((Bitmap) randomBitmap.get(0)).getHeight()));
 			int j = (int) (touchX / (((Bitmap) randomBitmap.get(0)).getWidth()));
-			Log.v("----i", i + "");
+			/*Log.v("----i", i + "");
 			Log.v("----j", j + "");
 			Log.v("----n", getN(i, j) + "");
 			Log.v("blankX",
@@ -93,7 +93,7 @@ public class PieceBitMapView extends View {
 			Log.v("touchX", piece[i][j].getIndexX() + "");
 			Log.v("blankY",
 					piece[getI(blankState)][getJ(blankState)].getIndexY() + "");
-			Log.v("touchY", piece[i][j].getIndexY() + "");
+			Log.v("touchY", piece[i][j].getIndexY() + "");*/
 			int blankX = piece[getI(blankState)][getJ(blankState)].getIndexX();
 			int blankY = piece[getI(blankState)][getJ(blankState)].getIndexY();
 			int touchX = piece[i][j].getIndexX();
