@@ -25,11 +25,12 @@ public class MainPuzzle extends Activity {
 
 	public static List<Bitmap> randomBitmap;
 	List<Bitmap> piceceBitmap;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_puzzle);
-		//生成一个随机的Bitmap  list
+		// 生成一个随机的Bitmap list
 		getRandomBitMap();
 		PieceBitMapView myview = new PieceBitMapView(this);
 		LinearLayout layout = (LinearLayout) super
@@ -56,50 +57,50 @@ public class MainPuzzle extends Activity {
 		}
 		return send;
 	}
-	//该方法用于得到一个乱序的Bitmap数列
-	public void getRandomBitMap()
-	{
+
+	// 该方法用于得到一个乱序的Bitmap数列
+	public void getRandomBitMap() {
 		// 根据R文件得到一个Bitmap对象
-				Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-						R.drawable.pic);
-				// 对源图像进行一定程度的大小的调整
-				Bitmap processedBitmap = Bitmap.createScaledBitmap(bitmap, 630, 600,
-						true);
-				// 该list用来存放切割后的图片
-				piceceBitmap = new ArrayList<Bitmap>(9);
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.pic);
+		// 对源图像进行一定程度的大小的调整
+		Bitmap processedBitmap = Bitmap.createScaledBitmap(bitmap, 630, 600,
+				true);
+		// 该list用来存放切割后的图片
+		piceceBitmap = new ArrayList<Bitmap>(9);
 
-				// 每张小图片的宽度
-				int width = processedBitmap.getWidth() / 3;
-				// 每张小图片的高度
-				int height = processedBitmap.getHeight() / 3;
-				// x,y是每次切割左上角的坐标
-				int x = 0;
-				int y = 0;
-				// 对大图片进行切割
-				for (int i = 0; i < 3; i++) {
+		// 每张小图片的宽度
+		int width = processedBitmap.getWidth() / 3;
+		// 每张小图片的高度
+		int height = processedBitmap.getHeight() / 3;
+		// x,y是每次切割左上角的坐标
+		int x = 0;
+		int y = 0;
+		// 对大图片进行切割
+		for (int i = 0; i < 3; i++) {
 
-					for (int j = 0; j < 3; j++) {
-						Bitmap tempBitmap = Bitmap.createBitmap(processedBitmap, x, y,
-								width, height);
-						// canvas.drawBitmap(tempBitmap, x, y, paint);
-						x = x + width;
-						piceceBitmap.add(tempBitmap);
+			for (int j = 0; j < 3; j++) {
+				Bitmap tempBitmap = Bitmap.createBitmap(processedBitmap, x, y,
+						width, height);
+				// canvas.drawBitmap(tempBitmap, x, y, paint);
+				x = x + width;
+				piceceBitmap.add(tempBitmap);
 
-					}
-					y = y + height;
-					x = 0;
-				}
-				piceceBitmap.remove(8);
-				randomBitmap = new ArrayList<Bitmap>(9);
-				int randomArray[] = new int[9];
-				randomArray = myRandom();
-				// 把图片list随机的付给另一个list
-				for (int i = 0; i < 8; i++) {
+			}
+			y = y + height;
+			x = 0;
+		}
+		piceceBitmap.remove(8);
+		randomBitmap = new ArrayList<Bitmap>(9);
+		int randomArray[] = new int[9];
+		randomArray = myRandom();
+		// 把图片list随机的付给另一个list
+		for (int i = 0; i < 8; i++) {
 
-					randomBitmap.add((Bitmap) piceceBitmap.get(randomArray[i]));
-				}
-				Bitmap nineBitmap = Bitmap.createBitmap(width, height,
-						Bitmap.Config.ALPHA_8);
-				randomBitmap.add(nineBitmap);
+			randomBitmap.add((Bitmap) piceceBitmap.get(randomArray[i]));
+		}
+		Bitmap nineBitmap = Bitmap.createBitmap(width, height,
+				Bitmap.Config.ALPHA_8);
+		randomBitmap.add(nineBitmap);
 	}
 }
