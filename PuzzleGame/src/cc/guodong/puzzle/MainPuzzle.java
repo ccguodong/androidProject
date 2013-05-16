@@ -24,7 +24,7 @@ import android.widget.LinearLayout;
 public class MainPuzzle extends Activity {
 
 	public static List<Bitmap> randomBitmap;
-
+	List<Bitmap> piceceBitmap;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,22 +36,6 @@ public class MainPuzzle extends Activity {
 				.findViewById(R.id.mainLinear);
 		layout.addView(myview);
 
-		// Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-		// R.drawable.pic);
-		/*
-		 * Log.v("-------width--", bitmap.getWidth()+"");//891
-		 * Log.v("------height--", bitmap.getHeight()+"");//637
-		 *//*
-			 * DisplayMetrics metric = new DisplayMetrics();
-			 * getWindowManager().getDefaultDisplay().getMetrics(metric); int
-			 * width = metric.widthPixels; // 屏幕宽度（像素）800 int height =
-			 * metric.heightPixels; // 屏幕高度（像素）1280 float density =
-			 * metric.density; // 屏幕密度（0.75 / 1.0 / 1.5） int densityDpi =
-			 * metric.densityDpi; // 屏幕密度DPI（120 / 160 / 240）
-			 * Log.v("-----width--",width+""); Log.v("-----height--",height+"");
-			 * Log.v("-----density--", density+""); Log.v("-----densityDpi--",
-			 * densityDpi+"");
-			 */
 	}
 
 	// 此方法用于产生一个随机的不重复的数组，从0-8;
@@ -72,6 +56,7 @@ public class MainPuzzle extends Activity {
 		}
 		return send;
 	}
+	//该方法用于得到一个乱序的Bitmap数列
 	public void getRandomBitMap()
 	{
 		// 根据R文件得到一个Bitmap对象
@@ -81,7 +66,7 @@ public class MainPuzzle extends Activity {
 				Bitmap processedBitmap = Bitmap.createScaledBitmap(bitmap, 630, 600,
 						true);
 				// 该list用来存放切割后的图片
-				List<Bitmap> piceceBitmap = new ArrayList<Bitmap>(9);
+				piceceBitmap = new ArrayList<Bitmap>(9);
 
 				// 每张小图片的宽度
 				int width = processedBitmap.getWidth() / 3;
@@ -116,6 +101,5 @@ public class MainPuzzle extends Activity {
 				Bitmap nineBitmap = Bitmap.createBitmap(width, height,
 						Bitmap.Config.ALPHA_8);
 				randomBitmap.add(nineBitmap);
-				//Log.v("-----test--", randomBitmap.size() + "");
 	}
 }
