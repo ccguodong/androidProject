@@ -23,8 +23,10 @@ public class PieceBitMapView extends View {
 
 	public List<Bitmap> randomBitmap = new ArrayList<Bitmap>(9);
 	Paint paint = new Paint();
+	// 该属性用于标记空白的图片
 	int blankState;
 	Piece piece[][] = new Piece[3][3];
+	// 点击后得到的坐标
 	float touchX;
 	float touchY;
 
@@ -51,9 +53,7 @@ public class PieceBitMapView extends View {
 		int indexX = 0;
 		int indexY = 0;
 		int count = 0;
-		/*
-		 * piece[1][1]=new Piece(); piece[1][1].setIndexX(3);
-		 */
+//绘制该view，并对数组piece赋值和图片
 		for (int i = 0; i < 3; i++) {
 
 			for (int j = 0; j < 3; j++) {
@@ -83,17 +83,17 @@ public class PieceBitMapView extends View {
 		this.touchX = event.getX();
 		this.touchY = event.getY();
 		if (touchX <= 630 & touchY <= 600) {
+			//i,j为根据触摸点的坐标，求出在第几行第几列，进而求出是哪张图片
 			int i = (int) (touchY / (((Bitmap) randomBitmap.get(0)).getHeight()));
 			int j = (int) (touchX / (((Bitmap) randomBitmap.get(0)).getWidth()));
-			/*Log.v("----i", i + "");
-			Log.v("----j", j + "");
-			Log.v("----n", getN(i, j) + "");
-			Log.v("blankX",
-					piece[getI(blankState)][getJ(blankState)].getIndexX() + "");
-			Log.v("touchX", piece[i][j].getIndexX() + "");
-			Log.v("blankY",
-					piece[getI(blankState)][getJ(blankState)].getIndexY() + "");
-			Log.v("touchY", piece[i][j].getIndexY() + "");*/
+			/*
+			 * Log.v("----i", i + ""); Log.v("----j", j + ""); Log.v("----n",
+			 * getN(i, j) + ""); Log.v("blankX",
+			 * piece[getI(blankState)][getJ(blankState)].getIndexX() + "");
+			 * Log.v("touchX", piece[i][j].getIndexX() + ""); Log.v("blankY",
+			 * piece[getI(blankState)][getJ(blankState)].getIndexY() + "");
+			 * Log.v("touchY", piece[i][j].getIndexY() + "");
+			 */
 			int blankX = piece[getI(blankState)][getJ(blankState)].getIndexX();
 			int blankY = piece[getI(blankState)][getJ(blankState)].getIndexY();
 			int touchX = piece[i][j].getIndexX();
@@ -102,16 +102,18 @@ public class PieceBitMapView extends View {
 					- touchY == -200)))
 					|| (((blankY - touchY == 0) && ((blankX - touchX == 210) || (blankX
 							- touchX == -210))))) {
-				Log.v("----n", "--------");
+				//对空白图片和触摸的图片进行位置互换
 				randomBitmap.set(blankState, piece[i][j].getBitMap());
-				randomBitmap.set(getN(i, j), piece[getI(blankState)][getJ(blankState)].getBitMap());
-				blankState=getN(i, j);
+				randomBitmap.set(getN(i, j),
+						piece[getI(blankState)][getJ(blankState)].getBitMap());
+				blankState = getN(i, j);
 				this.invalidate();
 			}
 		}
 		return super.onTouchEvent(event);
 	}
 
+	// 以下两个方法是根据给定的n，求出二维数组中对应的i和j
 	public int getI(int n) {
 		return n / 3;
 	}
@@ -127,6 +129,7 @@ public class PieceBitMapView extends View {
 			return -1;
 	}
 
+	// 该方法用于,给定二维数组的坐标i，j，求出该图片的位置n
 	public int getN(int i, int j) {
 		int n;
 		if (i == 0) {
